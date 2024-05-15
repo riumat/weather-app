@@ -47,7 +47,7 @@ const CityPage = async ({ searchParams }) => {
 
     <div className="flex flex-col gap-5 ">
       <div className="rounded-xl bg-black/35 backdrop-blur p-5">
-        <p className="text-[35px] ">{name}</p>
+        <p className="text-[20px] md:text-[35px] ">{name}</p>
 
         <div className="flex flex-col md:flex-row gap-10 items-center">
           <p className="text-[60px] font-semibold">{data?.main.temp.toFixed(1)}°<span className="font-thin text-slate-300">{` / ${data?.main.feels_like.toFixed(1)}°`}</span></p>
