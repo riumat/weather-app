@@ -1,14 +1,23 @@
+import Dates from "@/components/CityPage/Dates";
 import Image from "next/image";
 
 import { FaDroplet, FaWind, FaCompass, FaTemperatureArrowUp, FaTemperatureArrowDown, FaCloud } from "react-icons/fa6";
-import { LuSunrise, LuSunset } from "react-icons/lu";
 
-const dateFormatter = (unix, shift, toShift) => {
-  if (toShift) {  
+const dateFormatter = (unix, shift, userTz, toShift) => {
+  if (toShift) {
     unix = parseInt(unix) + parseInt(shift - 7200);
   }
   const date = new Date(unix * 1000);
-  const hour = date.getHours().toLocaleString("it") < 10 ? `0${date.getHours().toLocaleString("it")}` : date.getHours().toLocaleString("it");
+
+  let hourFormatted = parseInt(date.getHours().toLocaleString("it")) + parseInt(userTz);
+  if (hourFormatted >= 24) {
+    hourFormatted = -24;
+  } else if (hourFormatted < 0) {
+    hourFormatted = 24 - hourFormatted;
+  }
+
+  const hour = hourFormatted < 10 ? `0${hourFormatted}` : hourFormatted;
+
   const minutes = date.getMinutes().toLocaleString("it") < 10 ? `0${date.getMinutes().toLocaleString("it")}` : date.getMinutes().toLocaleString("it")
   return `${hour}:${minutes}`;
 }
@@ -27,63 +36,65 @@ const getData = async (lat, lon) => {
   return await res.json();
 }
 const CityPage = async ({ searchParams }) => {
+  let userTz = 0;
+
+
   const data = await getData(searchParams.lat, searchParams.lon);
   const name = searchParams.name;
 
-  console.log(data);
 
   return (
-    <div className="flex justify-between  rounded-xl bg-slate-800/70 backdrop-blur p-5">
-      <div className="flex flex-col gap-5">
 
+    <div className="flex flex-col gap-5 ">
+      <div className="rounded-xl bg-black/35 backdrop-blur p-5">
         <p className="text-[35px] ">{name}</p>
-        <p> {`ultima misurazione alle ${dateFormatter(data?.dt, data?.timezone, false)} GMT`}</p>
 
-        <p className="text-[55px] font-semibold">{data?.main.temp.toFixed(1)}°</p>
+        <div className="flex flex-col md:flex-row gap-10 items-center">
+          <p className="text-[60px] font-semibold">{data?.main.temp.toFixed(1)}°<span className="font-thin text-slate-300">{` / ${data?.main.feels_like.toFixed(1)}°`}</span></p>
+          <div className="flex gap-5 items-center">
+            <div className="flex items-center gap-5">
+              <div className="flex flex-col items-center gap-2">
+                <FaTemperatureArrowUp className="w-6 h-6" />
+                <p className="text-[20px]">{`${data?.main.temp_max.toFixed(1)}°`}</p>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <FaTemperatureArrowDown className="w-6 h-6" />
+                <p className="text-[20px]">{`${data?.main.temp_min.toFixed(1)}°`}</p>
+              </div>
 
-        <div>
-          <LuSunrise />
-          <p>{`${dateFormatter(data?.sys.sunrise, data?.timezone, true)} GMT`}</p>
-        </div>
-        <div>
-          <LuSunset />
-          <p>{`${dateFormatter(data?.sys.sunset, data?.timezone, true)} GMT`}</p>
-        </div>
+            </div>
 
-        <p>{`temperatura percepita ${data?.main.feels_like.toFixed(1)}°`}</p>
-
-        <div>
-          <FaTemperatureArrowUp />
-          <p>{`${data?.main.temp_max.toFixed(1)}°`}</p>
-        </div>
-        <div>
-          <FaTemperatureArrowDown />
-          <p>{`${data?.main.temp_min.toFixed(1)}°`}</p>
-        </div>
-        <div>
-          <FaDroplet />
-          <p>{`umidità ${data?.main.humidity}%`}</p>
-        </div>
-        <div>
-          <FaWind />
-          <p>{`velocità vento ${data?.wind.speed} km/h`}</p>
-        </div>
-        <div>
-          <FaCompass />
-          <p>{`direzione vento ${windFormatter(data?.wind.deg)}`}</p>
-        </div>
-        <div>
-          <FaCloud />
-          <p>{`nuvolosità ${data?.clouds.all}%`}</p>
-        </div>
-
-        <div className="flex items-center">
-          <p className="text-[15px] xl:text-[18px]">{data?.weather[0].description}</p>
-          <div className="relative w-[40px] h-[40px] xl:w-[50px] xl:h-[50px]">
-            <Image src={`https://openweathermap.org/img/wn/${data?.weather[0].icon}@2x.png`} alt="" fill={true} sizes="100%" className="image" />
           </div>
+          <p className="text-[20px] xl:text-[30px]">{`${data?.weather[0].description}`}</p>
         </div>
       </div>
+
+      <div className="flex flex-col 2xl:flex-row gap-5">
+        <div className="rounded-xl bg-black/35 backdrop-blur p-5 flex items-center justify-between text-[20px] md:text-[30px] flex-1">
+          <div className="flex flex-col md:flex-row gap-3 md:gap-5 items-center">
+            <FaDroplet className="w-6 h-6 md:w-10 md:h-10" />
+            <p >{`${data?.main.humidity}%`}</p>
+          </div>
+          <div className="flex flex-col md:flex-row gap-3 md:gap-5 items-center">
+            <FaCloud className="w-6 h-6 md:w-10 md:h-10" />
+            <p >{`${data?.clouds.all}%`}</p>
+          </div>
+          <div className="flex flex-col md:flex-row gap-3 md:gap-5 items-center">
+            <FaWind className="w-6 h-6 md:w-10 md:h-10" />
+            <p className="text-[14px] md:text-[20px]">{` ${data?.wind.speed} km/h`}</p>
+          </div>
+          <div className="flex flex-col md:flex-row gap-3 md:gap-5 items-center">
+            <FaCompass className="w-6 h-6 md:w-10 md:h-10" />
+            <p className="text-[14px] md:text-[20px]">{`${windFormatter(data?.wind.deg)}`}</p>
+          </div>
+        </div>
+
+        <div className="rounded-xl bg-black/35 backdrop-blur p-5 flex-1">
+          <Dates update={data?.dt} sunrise={data?.sys.sunrise} sunset={data?.sys.sunset} shift={data?.timezone} />
+        </div>
+
+      </div>
+      
     </div>
   );
 }
