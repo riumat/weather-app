@@ -15,7 +15,7 @@ const searchHandle = (lat, lon) => {
 
 }
 
-const page = async ({ params }) => {
+const QueryPage = async ({ params }) => {
   const router = useRouter();
   const data = await getData(params?.query);
 
@@ -36,4 +36,4 @@ const page = async ({ params }) => {
   )
 }
 
-export default page
+export default QueryPage;

@@ -26,7 +26,7 @@ const getData = async (lat, lon) => {
   }
   return await res.json();
 }
-const page = async ({ searchParams }) => {
+const CityPage = async ({ searchParams }) => {
   const data = await getData(searchParams.lat, searchParams.lon);
   const name = searchParams.name;
 
@@ -88,4 +88,4 @@ const page = async ({ searchParams }) => {
   );
 }
 
-export default page;
+export default CityPage;

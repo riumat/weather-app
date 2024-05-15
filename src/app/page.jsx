@@ -31,7 +31,7 @@ const getData = async () => {
 
 
 
-const page = async () => {
+const Home = async () => {
   const data = await getData();
 
 
@@ -48,4 +48,4 @@ const page = async () => {
   )
 }
 
-export default page
+export default Home
