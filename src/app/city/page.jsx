@@ -4,7 +4,7 @@ import { FaDroplet, FaWind, FaCompass, FaTemperatureArrowUp, FaTemperatureArrowD
 import { LuSunrise, LuSunset } from "react-icons/lu";
 
 const dateFormatter = (unix, shift, toShift) => {
-  if (toShift) {
+  if (toShift) {  
     unix = parseInt(unix) + parseInt(shift - 7200);
   }
   const date = new Date(unix * 1000);

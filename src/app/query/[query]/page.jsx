@@ -1,23 +1,26 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-
-const getData = async (query) => {
-  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`;
-  const res = await fetch(url, { next: { revalidate: 300 } });
-  if (!res.ok) {
-    throw new Error("failed to fetch");
-  }
-  return await res.json();
-}
-
-const searchHandle = (lat, lon) => {
-
-}
+import { useEffect, useState } from "react";
 
 const QueryPage = async ({ params }) => {
   const router = useRouter();
-  const data = await getData(params?.query);
+  const [data, setData] = useState();
+  const [isLoading, setLoading] = useState(true)
+  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${params?.query}&limit=5&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`;
+
+
+  useEffect(() => {
+    fetch(url, { next: { revalidate: 300 } })
+      .then(res => res.json())
+      .then((data) => {
+        setData(data);
+        setLoading(false);
+      })
+  }, [])
+  
+  if (isLoading) return <p>Caricamento...</p>
+  if (!data) return <p>Nessuna città.</p>
 
   return (
     <div className="flex flex-col gap-7 flex-grow justify-center">
