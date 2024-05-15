@@ -37,17 +37,17 @@ const CityPage = async ({ searchParams }) => {
       <div className="flex flex-col gap-5">
 
         <p className="text-[35px] ">{name}</p>
-        <p> {`ultima misurazione alle ${dateFormatter(data?.dt, data?.timezone, false)}`}</p>
+        <p> {`ultima misurazione alle ${dateFormatter(data?.dt, data?.timezone, false)} GMT`}</p>
 
         <p className="text-[55px] font-semibold">{data?.main.temp.toFixed(1)}°</p>
 
         <div>
           <LuSunrise />
-          <p>{`${dateFormatter(data?.sys.sunrise, data?.timezone, true)}`}</p>
+          <p>{`${dateFormatter(data?.sys.sunrise, data?.timezone, true)} GMT`}</p>
         </div>
         <div>
           <LuSunset />
-          <p>{`${dateFormatter(data?.sys.sunset, data?.timezone, true)}`}</p>
+          <p>{`${dateFormatter(data?.sys.sunset, data?.timezone, true)} GMT`}</p>
         </div>
 
         <p>{`temperatura percepita ${data?.main.feels_like.toFixed(1)}°`}</p>
