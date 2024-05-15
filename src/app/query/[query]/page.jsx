@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const QueryPage = async ({ params }) => {
+const QueryPage = ({ params }) => {
   const router = useRouter();
   const [data, setData] = useState();
   const [isLoading, setLoading] = useState(true)
@@ -18,7 +18,7 @@ const QueryPage = async ({ params }) => {
         setLoading(false);
       })
   }, [])
-  
+
   if (isLoading) return <p>Caricamento...</p>
   if (!data) return <p>Nessuna città.</p>
 
