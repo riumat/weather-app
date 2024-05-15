@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 
 const getData = async (query) => {
-  const url = `http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`;
+  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${process.env.NEXT_PUBLIC_WEATHER_KEY}`;
   const res = await fetch(url, { next: { revalidate: 300 } });
   if (!res.ok) {
     throw new Error("failed to fetch");
