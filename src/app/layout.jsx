@@ -13,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} w-screen h-screen bg-slate-900 text-slate-50 container m-auto flex flex-col`}>
+      <body className={`${inter.className} w-screen h-screen bg-slate-900 text-slate-50 container m-auto flex flex-col `}>
         <div className="absolute left-0 top-0 w-screen h-screen bg-black/20 z-[-2]"/>
         <div className="absolute left-0 top-0 w-screen h-screen bg-gradient-to-b from-transparent to-black/80 z-[-1]"/>
         <Image src={"https://images.hdqwalls.com/wallpapers/nature-hd-sd.jpg"} fill={true} sizes="100vw" className="object-cover z-[-3] absolute" alt="" />

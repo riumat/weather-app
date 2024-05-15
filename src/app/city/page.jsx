@@ -80,7 +80,7 @@ const CityPage = async ({ searchParams }) => {
         <div className="flex items-center">
           <p className="text-[15px] xl:text-[18px]">{data?.weather[0].description}</p>
           <div className="relative w-[40px] h-[40px] xl:w-[50px] xl:h-[50px]">
-            <Image src={`https://openweathermap.org/img/wn/${data?.weather[0].icon}@2x.png`} alt="" fill={true} sizes="100vw" className="image" />
+            <Image src={`https://openweathermap.org/img/wn/${data?.weather[0].icon}@2x.png`} alt="" fill={true} sizes="100%" className="image" />
           </div>
         </div>
       </div>
