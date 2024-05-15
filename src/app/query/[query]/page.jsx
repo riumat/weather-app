@@ -30,9 +30,9 @@ const QueryPage = ({ params }) => {
           className="grid grid-cols-3  p-5 items-center  rounded-xl bg-slate-800/70 backdrop-blur cursor-pointer"
           onClick={() => router.push(`/city?lat=${city?.lat}&lon=${city?.lon}&name=${city?.local_names?.it ? city?.local_names?.it : city?.name}`)}>
 
-          <p className="text-[18px] font-semibold">{city?.local_names?.it ? city?.local_names?.it : city?.name}</p>
-          <p className="text-[16px]">Nazione: {city?.country}</p>
-          <p className="text-[16px]">Regione: {city?.state}</p>
+          <p className="text-[18px] font-semibold cursor-default">{city?.local_names?.it ? city?.local_names?.it : city?.name}</p>
+          <p className="text-[16px] cursor-default">Nazione: {city?.country}</p>
+          <p className="text-[16px] cursor-default">Regione: {city?.state}</p>
         </div>
       ))}
     </div>
